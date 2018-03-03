@@ -2,9 +2,9 @@ package com.pakages
 import scala.collection.mutable
 object Grocery_Object {
 
-  val grocery_list: mutable.Map[Int, (String, (Double, String), Int)] = mutable.HashMap.empty[Int,(String,(Double,String),Int)]
 
   def fromXML(node: scala.xml.NodeSeq): mutable.Map[Int, (String, (Double, String), Int)] = {
+    val grocery_list: mutable.Map[Int, (String, (Double, String), Int)] = mutable.HashMap.empty[Int,(String,(Double,String),Int)]
     node match {
       case <catalogue>{content @ _*}</catalogue> => {
         for (con @ <items>{_*}</items> <- content) {
@@ -13,6 +13,7 @@ object Grocery_Object {
           val amount = con \\ "amount"
           val currency = con \\ "currency"
           val stock = con \\ "stock"
+          val id_length: Int = (con \\ "id").length
 
           val category_list = mutable.ListBuffer.empty[Int]
           val name_list = mutable.ListBuffer.empty[String]
@@ -34,8 +35,9 @@ object Grocery_Object {
           val final_list =   category_list zip name_list zip amount_list zip currency_list zip stock_list map {
             case (((((a, b), c), d), e)) => (a,b,c,d,e)
           }
-          for(i <- 0 until(2)) {
+          for(i <- 0 until(id_length)) {
               grocery_list ++= List(final_list(i)._1 -> (final_list(i)._2, (final_list(i)._3,final_list(i)._4),final_list(i)._5))
+
           }
           //println(grocery_list)
           //println(final_list)

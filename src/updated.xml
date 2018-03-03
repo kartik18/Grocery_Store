@@ -1,0 +1,20 @@
+<catalogue>
+    <items>
+        <item>
+            <id>Beverage</id>
+            <name>LUX bath soap</name>
+            <uom>gm</uom>  <!-- Unit Of Measure -->
+            <unitSize>10</unitSize>
+            <unitPrice>
+                <amount>12.00</amount>
+                <currency>INR</currency>  <!-- Currency alpha3code -->
+            </unitPrice>
+            <quantity>
+                <stock>100</stock>
+                <measure>unit</measure> 
+<!-- measures could be unit, kg, gm etc. -->
+            </quantity>
+        </item>
+
+    </items>
+</catalogue>
