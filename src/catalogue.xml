@@ -1,0 +1,22 @@
+<catalogue>
+    <items>
+        <item>
+            <id>1</id>
+            <name>LUX bath soap</name>
+            <unitPrice>
+                <amount>12.00</amount>
+                <currency>INR</currency>  <!-- Currency alpha3code -->
+            </unitPrice>
+            <stock>100</stock>
+		</item>
+		<item>
+            <id>2</id>
+            <name>Lays Chips</name>
+            <unitPrice>
+                <amount>12.00</amount>
+                <currency>INR</currency>  <!-- Currency alpha3code -->
+            </unitPrice>
+            <stock>100</stock>
+		</item>	
+    </items>
+</catalogue>
