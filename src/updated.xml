@@ -1,16 +1,34 @@
 <catalogue>
     <items>
-        <item>
-            <id>Beverage</id>
+		<item>
+            <id>1</id>
             <name>LUX bath soap</name>
-            <uom>gm</uom>  <!-- Unit Of Measure -->
-            <unitSize>10</unitSize>
             <unitPrice>
                 <amount>12.00</amount>
                 <currency>INR</currency>  <!-- Currency alpha3code -->
             </unitPrice>
+            <stock>100</stock>
+		</item>
+		<item>
+            <id>2</id>
+            <name>Lays Chips</name>
+            <unitPrice>
+                <amount>12.00</amount>
+                <currency>INR</currency>  <!-- Currency alpha3code -->
+            </unitPrice>
+            <stock>100</stock>
+		</item>	
+        <item>
+            <id>3</id>
+            <name>Perfume</name>
+            <uom>gm</uom>  <!-- Unit Of Measure -->
+            <unitSize>10</unitSize>
+            <unitPrice>
+                <amount>150.00</amount>
+                <currency>INR</currency>  <!-- Currency alpha3code -->
+            </unitPrice>
             <quantity>
-                <stock>100</stock>
+                <stock>12</stock>
                 <measure>unit</measure> 
 <!-- measures could be unit, kg, gm etc. -->
             </quantity>

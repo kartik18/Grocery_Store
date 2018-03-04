@@ -3,7 +3,7 @@ package com.pakages
 import scala.collection.mutable
 
 case class User() {
-
+  var total = 0.0d
   def add(i:Int,x:mutable.Map[Int, (String, (Double, String), Int)],quantity:Int): Unit = {
     val key = i
     val stock = quantity
@@ -35,7 +35,6 @@ case class User() {
   }
 
   def checkout(x:mutable.Map[Int, (String, (Double, String), Int)])  ={
-    var total = 0.0
      x.keys.map(i => {
        val product = x(i)._1
        val price = x(i)._2._1
@@ -49,6 +48,11 @@ case class User() {
        App.grocery_list ++= mutable.Map(key -> value)
      })
     println("Your total bill is "+total)
+  }
+
+  def summary(x:mutable.Map[Int, (String, (Double, String), Int)]) = {
+   println("Your today's shopping is about "+total+" INR. And that includes")
+   x.values.foreach(v => println("*  "+v._1))
   }
 }
 

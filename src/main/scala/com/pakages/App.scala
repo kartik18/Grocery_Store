@@ -29,6 +29,7 @@ object App  {
     User().update(1,user_demand,1,5)
     println(user_demand)
     User().checkout(user_demand)
+    User().summary(grocery_list)
     println(grocery_list)
 
   }
