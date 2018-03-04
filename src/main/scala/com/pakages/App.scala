@@ -9,7 +9,8 @@ import scala.xml.XML
 object App  {
   
   val catalogueXML = XML.loadFile("D:/grocery_store/src/catalogue.xml")
-  val grocery_list: mutable.Map[Int, (String, (Double, String), Int)] = Grocery_Object.fromXML(catalogueXML)
+  var grocery_list: mutable.Map[Int, (String, (Double, String), Int)] = Grocery_Object.fromXML(catalogueXML)
+  var user_demand: mutable.Map[Int, (String, (Double, String), Int)] = mutable.Map.empty[Int,(String,(Double,String),Int)]
 
 
   def main(args : Array[String]) {
@@ -18,14 +19,17 @@ object App  {
     time.schedule(com.pakages.ScheduledTask(),0,2000)
     Thread.sleep(2000)
     println(grocery_list)
-    val user_demand: mutable.Map[Int, (String, (Double, String), Int)] = mutable.Map.empty[Int,(String,(Double,String),Int)]
-    User().add(1,user_demand)
-    User().add(2,user_demand)
+   // val user_demand: mutable.Map[Int, (String, (Double, String), Int)] = mutable.Map.empty[Int,(String,(Double,String),Int)]
+    User().add(1,user_demand,3)
+    User().add(2,user_demand,5)
     println(user_demand)
-    User().remove(2,user_demand)
+    User().remove(1,user_demand,2)
+    User().remove(2,user_demand,1)
     println(user_demand)
-    User().update(1,3,user_demand)
+    User().update(1,user_demand,1,5)
     println(user_demand)
+    User().checkout(user_demand)
+    println(grocery_list)
 
   }
 
