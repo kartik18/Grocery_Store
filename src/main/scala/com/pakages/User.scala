@@ -1,9 +1,9 @@
 package com.pakages
 import scala.collection.mutable
-
+import util.control.Breaks._
 case class User() {
   var total = 0.0d
-  var user_demand: mutable.Map[Int, (String, (Double, String), Int)] = mutable.Map.empty[Int,(String,(Double,String),Int)]
+  var user_demand: mutable.Map[Int, (String, (Double, String), Int)] = mutable.Map.empty[Int,(String,(Double,String),Int)] //Key,(Item,(Price,Currency),Stock)
 
   def userWindow(): Unit = {
       println("Select from the options given below")
@@ -44,7 +44,7 @@ case class User() {
       if(user_demand.keys.size == 0 ){
         println("Oops, your cart is empty")
       }
-      else user_demand.values.foreach(v => println(v._1+" of price "+v._2._1+" "+v._2._2+" for "+v._3+" stock is "+v._2._1*v._3));Thread.sleep(2000)
+      else user_demand.values.foreach(v => println(v._1+" of price "+v._2._1+" "+v._2._2+" for "+v._3+" stock is "+v._2._1*v._3));Thread.sleep(1000)
 
     println("Select from the following options: ")
     println("1) Update the item quantity")
@@ -109,22 +109,85 @@ case class User() {
   }
 
   def checkout(x:mutable.Map[Int, (String, (Double, String), Int)])  ={
-     x.keys.map(i => {
-       val product = x(i)._1
-       val price = x(i)._2._1
-       val currency = x(i)._2._2
-       val stock = x(i)._3
-       println("Bill for the "+ product +" is "+ price*stock+" "+currency)
-       total += price*stock
-       val key = i
-       val value = (App.grocery_list(i).copy(_3 = App.grocery_list(i)._3 - x(i)._3))
-       App.grocery_list -= key
-       App.grocery_list ++= mutable.Map(key -> value)
-     })
+    val x_keys = x.keys.toList
+    val discount_keys = Admin.buy_get_Discount.keys.toList
+    var flag = false; println(discount_keys)
+    for (x_x <- x_keys){
+      for(y_y <- discount_keys){
+        println("Before if cond")
+        if(x_x == y_y){
+          println("After if cond")
+          flag = true
+          if(user_demand(x_x)._3 >= Admin.buy_get_Discount(x_x)._1){
+            println("Your are applicable for discount")
+            val stock = x(x_x)._3
+            val stock_discount  = x(x_x)._3 + Admin.buy_get_Discount(x_x)._2
+            val product_discount = x(x_x)._1
+            val currency_discount = x(x_x)._2._2
+            val price_discount = x(x_x)._2._1
+            println("Bill for the "+ product_discount +"  for the "+ stock_discount+" is "+ stock+" "+currency_discount)
+            total += (price_discount*stock)
+            val key = x_x
+            var value = App.grocery_list(x_x)
+            value = value.copy(_3 = value._3 - stock_discount)
+            // App.grocery_list(x_x).copy(_3 = App.grocery_list(x_x)._3 - x(x_x)._3)
+            App.grocery_list -= key
+            App.grocery_list ++= mutable.Map(key -> value)
+          }
+        }
+      }
+      if (flag == false){
+        val product = x(x_x)._1
+        val price = x(x_x)._2._1
+        val currency = x(x_x)._2._2
+        val stock = x(x_x)._3
+        println("Bill for the "+ product +" is "+ price*stock+" "+currency)
+        total += price*stock
+        val key = x_x
+        var value = App.grocery_list(x_x)
+        value = value.copy(_3 = value._3 - stock)
+        //App.grocery_list(key).copy(_3 = App.grocery_list(x_x)._3 - x(x_keys)._3)
+        App.grocery_list -= key
+        App.grocery_list ++= mutable.Map(key -> value)
+      }
+    }
+
+
+   /*  x.keys.foreach(i => {
+       Admin().buy_get_Discount.keys.foreach(j => {if( i == j){
+         if(user_demand(i)._3 >= Admin().buy_get_Discount(i)._1){
+           println("Your are applicable for discount")
+           val stock = x(i)._3
+           val stock_discount  = x(i)._3 + Admin().buy_get_Discount(i)._2
+           val product_dicount = x(i)._1
+           val currency_discount = x(i)._2._2
+           val price_discount = x(i)._2._1
+           println("Bill for the "+ product_dicount +"  for the "+ stock_discount+" is "+ stock+" "+currency_discount)
+           total += (price_discount*stock)
+           val key = i
+           val value = App.grocery_list(i).copy(_3 = App.grocery_list(i)._3 - x(i)._3)
+           App.grocery_list -= key
+           App.grocery_list ++= mutable.Map(key -> value)
+         }
+       }}
+         val product = x(i)._1
+         val price = x(i)._2._1
+         val currency = x(i)._2._2
+         val stock = x(i)._3
+         println("Bill for the "+ product +" is "+ price*stock+" "+currency)
+         total += price*stock
+         val key = i
+         val value = App.grocery_list(i).copy(_3 = App.grocery_list(i)._3 - x(i)._3)
+         App.grocery_list -= key
+         App.grocery_list ++= mutable.Map(key -> value)
+
+       } )
+
+     })*/
     println("Your total bill is "+total)
   }
 
-  def summary(x:mutable.Map[Int, (String, (Double, String), Int)]) = {
+  def summary(x:mutable.Map[Int, (String, (Double, String), Int)]):Unit = {
    println("Your today's shopping is about "+total+" INR. And that includes")
    x.values.foreach(v => println("*  "+v._1))
   }

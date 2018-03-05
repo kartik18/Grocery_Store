@@ -3,8 +3,8 @@ import java.util.Timer
 
 import scala.collection.mutable
 
-case class Admin() {
-  var buy_get_Discount = scala.collection.mutable.Map.empty[Int,(Int,Int)]
+object Admin {
+  var buy_get_Discount = scala.collection.mutable.Map.empty[Int,(Int,Int)] //ItemKey Min Free
   def adminWindow():Unit = {
     val time = new Timer()
     time.schedule(com.pakages.ScheduledTask(),0,2000)

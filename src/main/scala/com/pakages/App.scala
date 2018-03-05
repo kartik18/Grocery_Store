@@ -18,7 +18,7 @@ object App  {
     println("User")
     scala.io.StdIn.readLine("") match {
       case "Admin" => {
-          Admin().adminWindow()
+          Admin.adminWindow()
       }
       case "User"  => {
         val time = new Timer()
@@ -32,10 +32,5 @@ object App  {
   def main(args : Array[String]) {
     login()
 
-
-
   }
-
-
-
 }
